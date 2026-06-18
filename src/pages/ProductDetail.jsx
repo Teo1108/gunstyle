@@ -4,6 +4,7 @@ import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useProductGallery } from '../hooks/useProductGallery';
 import { ALL_SIZES } from '../utils/sizes';
+import { API_BASE } from '../utils/api';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/products/${id}`)
+    fetch(`${API_BASE}/api/products/${id}`)
       .then(res => res.json())
       .then(data => { if (data.success) setProduct(data.data); });
   }, [id]);

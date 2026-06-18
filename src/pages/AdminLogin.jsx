@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setAdminToken, getAdminToken, authFetch } from '../utils/adminAuth';
+import { API_BASE } from '../utils/api';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const AdminLogin = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    fetch('/api/admin/login', {
+    fetch(`${API_BASE}/api/admin/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ password }),

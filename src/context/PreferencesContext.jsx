@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE } from '../utils/api';
 
 const PreferencesContext = createContext(null);
 
-const API_BASE = '/api/preferences';
+const PREFS_URL = `${API_BASE}/api/preferences`;
 
 export const PreferencesProvider = ({ children }) => {
   const [device, setDeviceState] = useState('mobile');
@@ -11,7 +12,7 @@ export const PreferencesProvider = ({ children }) => {
 
   // --- Load preferences from backend on mount ---
   useEffect(() => {
-    fetch(API_BASE)
+    fetch(PREFS_URL)
       .then(res => res.json())
       .then(data => {
         if (data.success) {
@@ -34,7 +35,7 @@ export const PreferencesProvider = ({ children }) => {
 
   // --- Persist single preference key to backend ---
   const persistPreference = (key, value) => {
-    fetch(API_BASE, {
+    fetch(PREFS_URL, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ [key]: value }),

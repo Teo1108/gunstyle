@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE } from '../utils/api';
 
 const CartContext = createContext(null);
 
@@ -9,7 +10,7 @@ export const CartProvider = ({ children }) => {
   // Load initial cart from backend
   const fetchCart = () => {
     setLoading(true);
-    fetch('/api/cart')
+    fetch(`${API_BASE}/api/cart`)
       .then(res => res.json())
       .then(data => {
         if (data.success) setCart(data.data);
@@ -26,7 +27,7 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   const updateCart = (productId, quantity) => {
-    fetch('/api/cart', {
+    fetch(`${API_BASE}/api/cart`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ productId, quantity })
@@ -38,7 +39,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeCartItem = (productId) => {
-    fetch(`/api/cart/${productId}`, {
+    fetch(`${API_BASE}/api/cart/${productId}`, {
       method: 'DELETE'
     })
     .then(res => res.json())

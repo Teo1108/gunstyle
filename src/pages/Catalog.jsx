@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Search, SlidersHorizontal, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../components/ProductCard';
+import { API_BASE } from '../utils/api';
 
 const Catalog = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Catalog = () => {
   const filters = ['All', 'T-Shirts', 'Hoodies', 'Accessories'];
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch(`${API_BASE}/api/products`)
       .then(res => res.json())
       .then(res => {
         if(res.success) setProducts(res.data);

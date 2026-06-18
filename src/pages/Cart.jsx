@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Trash2, Plus, Minus, Check, CreditCard, Apple, MapPin, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { API_BASE } from '../utils/api';
 
 const CartItem = ({ item, updateQuantity, removeItem }) => (
   <div style={{ 
@@ -59,7 +60,7 @@ const Cart = () => {
       return;
     }
     setLoading(true);
-    fetch('/api/checkout', {
+    fetch(`${API_BASE}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ items, discountCode: dCode })
@@ -85,7 +86,7 @@ const Cart = () => {
   }, [cart, appliedDiscount, cartLoading]);
 
   const applyDiscount = () => {
-    fetch('/api/discounts/validate', {
+    fetch(`${API_BASE}/api/discounts/validate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code: discountCode })
@@ -104,7 +105,7 @@ const Cart = () => {
 
   const completeCheckout = () => {
     setLoading(true);
-    fetch('/api/checkout', {
+    fetch(`${API_BASE}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ items: cart, discountCode: appliedDiscount, finalize: true })

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Pencil, Trash2, LogOut } from 'lucide-react';
 import { authFetch, clearAdminToken } from '../utils/adminAuth';
+import { API_BASE } from '../utils/api';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
   const loadProducts = () => {
-    fetch('/api/products')
+    fetch(`${API_BASE}/api/products`)
       .then(res => res.json())
       .then(data => { if (data.success) setProducts(data.data); });
   };

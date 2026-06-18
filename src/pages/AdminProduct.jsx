@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useProductForm } from '../hooks/useProductForm';
 import { ALL_SIZES } from '../utils/sizes';
 import { authFetch } from '../utils/adminAuth';
+import { API_BASE } from '../utils/api';
 
 const CATEGORIES = ['T-Shirts', 'Hoodies', 'Accessories'];
 
@@ -26,7 +27,7 @@ const AdminProductForm = ({ initialProduct, productId }) => {
       .then(res => res.json())
       .then(data => {
         setUploading(false);
-        if (data.success) form.addImage(data.path);
+        if (data.success) form.addImage(`${API_BASE}${data.path}`);
       })
       .catch(() => setUploading(false));
     e.target.value = '';
@@ -178,7 +179,7 @@ const AdminProduct = () => {
 
   useEffect(() => {
     if (!isEditing) return;
-    fetch(`/api/products/${id}`)
+    fetch(`${API_BASE}/api/products/${id}`)
       .then(res => res.json())
       .then(data => { if (data.success) setInitialProduct(data.data); });
   }, [id, isEditing]);

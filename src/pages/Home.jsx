@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import ProductCard from '../components/ProductCard';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { API_BASE } from '../utils/api';
 
 const Home = () => {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -11,7 +12,7 @@ const Home = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch('/api/products')
+    fetch(`${API_BASE}/api/products`)
       .then(res => res.json())
       .then(res => {
         if (res.success) setProducts(res.data);
